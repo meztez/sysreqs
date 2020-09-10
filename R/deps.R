@@ -43,6 +43,9 @@ get_remote_deps <- function(remote_packages) {
     package = character(),
     version = character()
   )
+  if (!length(remote_packages)) {
+    return(remote_deps)
+  }
   for (remote_package in remote_packages) {
     remote_package <- utils::tail(strsplit(remote_package, "::", fixed = TRUE)[[1]], 1)
     repo_spec <- remotes::parse_repo_spec(remote_package)
