@@ -46,7 +46,7 @@ sysreqs <- function(desc, platform = current_platform(), soft = TRUE, remotes = 
 
   ## Add remotes dependencies
   if (remotes) {
-    deps <- rbind(deps, get_remotes_deps(dsc$get_remotes))
+    deps <- rbind(deps, get_remote_deps(dsc$get_remotes))
   }
 
   ## Remove soft dependencies if they are not wanted
