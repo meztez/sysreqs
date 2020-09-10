@@ -44,7 +44,7 @@ get_remote_deps <- function(remote_packages) {
     version = character()
   )
   for (remote_package in remote_packages) {
-    remote_package <- tail(strsplit(remote_package, "::", fixed = TRUE)[[1]], 1)
+    remote_package <- utils::tail(strsplit(remote_package, "::", fixed = TRUE)[[1]], 1)
     repo_spec <- remotes::parse_repo_spec(remote_package)
     repo_spec <- repo_spec[nchar(repo_spec) > 0L]
     dsc <- desc::desc(text = do.call(remotes:::github_DESCRIPTION, repo_spec))

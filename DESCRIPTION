@@ -8,11 +8,12 @@ License: MIT + file LICENSE
 LazyData: true
 URL: https://github.com/r-hub/sysreqs
 BugReports: https://github.com/r-hub/sysreqs/issues
-RoxygenNote: 5.0.1.9000
+RoxygenNote: 7.1.1
 Suggests: 
     testthat
 Imports:
     debugme,
     desc,
     tools,
-    utils
+    utils,
+    remotes

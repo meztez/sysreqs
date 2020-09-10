@@ -3,11 +3,15 @@
 \docType{package}
 \name{sysreqs}
 \alias{sysreqs}
-\alias{sysreqs-package}
-\alias{sysreqs}
 \title{Install SystemRequirements of Packages}
 \usage{
-sysreqs(desc, platform = current_platform(), soft = TRUE)
+sysreqs(
+  desc,
+  platform = current_platform(),
+  soft = TRUE,
+  remotes = FALSE,
+  pkgs = character()
+)
 }
 \arguments{
 \item{desc}{Path to a \code{DESCRIPTION} file.}
@@ -15,6 +19,10 @@ sysreqs(desc, platform = current_platform(), soft = TRUE)
 \item{platform}{Platform string, defaults to the current platform.}
 
 \item{soft}{Whether to include soft dependencies.}
+
+\item{remotes}{Whether to include remotes dependencies.}
+
+\item{pkgs}{Additional package names.}
 }
 \value{
 All system dependencies on the current or the specified
@@ -22,7 +30,4 @@ All system dependencies on the current or the specified
 }
 \description{
 Automatically download and install system requirements of R packages.
-
-System requirements of a local package
 }
-

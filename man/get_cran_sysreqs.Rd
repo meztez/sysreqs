@@ -19,4 +19,3 @@ All system dependencies on the current or the specified
 Get the system requirements of a CRAN package
 }
 \keyword{internal}
-
