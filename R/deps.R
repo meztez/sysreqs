@@ -37,6 +37,18 @@ get_cran_deps <- function(packages) {
 #'   separated by a single dash.
 #'
 #' @keywords internal
-get_remotes_deps <- function(remote_packages) {
-  # Recursively get remote_packages dependencies
+get_remote_deps <- function(remote_packages) {
+  remote_deps <- data.frame(
+    type    = character(),
+    package = character(),
+    version = character()
+  )
+  for (remote_package in remote_packages) {
+    remote_package <- tail(strsplit(remote_package, "::", fixed = TRUE)[[1]], 1)
+    repo_spec <- remotes::parse_repo_spec(remote_package)
+    repo_spec <- repo_spec[nchar(repo_spec) > 0L]
+    dsc <- desc::desc(text = do.call(remotes:::github_DESCRIPTION, repo_spec))
+    remote_deps <- rbind(remote_deps, dsc$get_deps(), get_remote_deps(dsc$get_remotes()))
+  }
+  remote_deps
 }
