@@ -8,9 +8,9 @@
 #' @export
 
 sysreq_commands <- function(desc, platform = current_platform(),
-                            soft = TRUE) {
+                            soft = TRUE, pkgs = character()) {
 
-  pkgs <- sysreqs(desc, platform, soft = soft)
+  pkgs <- sysreqs(desc, platform, soft = soft, pkgs = pkgs)
 
   url <- make_url(
     sysreqs_platform_url,

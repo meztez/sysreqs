@@ -29,3 +29,14 @@ get_cran_deps <- function(packages) {
 
   deps
 }
+
+#' Recursive (hard) dependencies of remote packages
+#'
+#' @param remote_packages Character vector of package names.
+#' @return A character vector of package names and versions,
+#'   separated by a single dash.
+#'
+#' @keywords internal
+get_remotes_deps <- function(remote_packages) {
+  # Recursively get remote_packages dependencies
+}
