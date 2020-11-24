@@ -20,6 +20,7 @@ sysreq_commands <- function(desc, platform = current_platform(),
   cmd <- download_json(url)[["install-commands"]]
 
   pkgs <- unique(pkgs)
+  pkgs <- gsub("python-minimal", "python3-minimal", pkgs)
 
   scripts <- grep("^script: ", pkgs, value = TRUE)
   pkgs <- setdiff(pkgs, scripts)
