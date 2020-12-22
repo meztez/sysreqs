@@ -37,7 +37,7 @@ get_cran_deps <- function(packages) {
 #'   separated by a single dash.
 #'
 #' @keywords internal
-get_remote_deps <- function(remote_packages) {
+get_remote_deps <- function(remote_packages, process = process_remotes()) {
   remote_deps <- data.frame(
     type    = character(),
     package = character(),
@@ -51,7 +51,44 @@ get_remote_deps <- function(remote_packages) {
     repo_spec <- remotes::parse_repo_spec(remote_package)
     repo_spec <- repo_spec[nchar(repo_spec) > 0L]
     dsc <- desc::desc(text = do.call(remotes:::github_DESCRIPTION, repo_spec))
-    remote_deps <- rbind(remote_deps, dsc$get_deps(), get_remote_deps(dsc$get_remotes()))
+    remote_deps <- rbind(
+      remote_deps,
+      dsc$get_deps(),
+      get_remote_deps(
+        process$unprocessed(
+          dsc$get("Package"),
+          dsc$get_remotes()
+        ),
+        process
+      )
+    )
   }
   remote_deps
+}
+
+process_remotes <- function() {
+  processed_remotes <- character()
+  list(
+    unprocessed = function(pkg, rmt) {
+      on.exit({
+        unq <- unique(rmt)
+        processed_remotes <<- c(
+          processed_remotes,
+          setNames(unq, rep(pkg, length(unq)))
+        )
+      })
+      if (any(processed_remotes %in% rmt)) {
+        warning("Recursive remotes. Printing remotes dependency tree. \n",
+          paste0("package : ", names(processed_remotes),
+                 " // remote : ", processed_remotes
+                 , collapse = "\n"),
+          immediate. = TRUE
+        )
+      }
+      rmt[!rmt %in% processed_remotes]
+    },
+    processed = function() {
+      processed_remotes
+    }
+  )
 }
